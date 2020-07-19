@@ -19,6 +19,7 @@ DT_PAAS_TOKEN=$(echo $CREDS | jq -r '.dynatracePaaSToken')
 
 keptn_install=true
 keptn_install_qualitygates=false
+jmeter_extended_service=true
 
 setupMagicDomainPublicIp
 keptnInstall
@@ -30,6 +31,9 @@ bashas "kubectl apply -f https://raw.githubusercontent.com/keptn-contrib/dynatra
 printInfo "Wait for the Service to be created"
 waitForAllPods
 bashas "keptn configure monitoring dynatrace"
+waitForAllPods
+
+jmeterExtendedService
 waitForAllPods
 
 KEPTN_API_TOKEN=$(kubectl get secret keptn-api-token -n keptn -ojsonpath={.data.keptn-api-token} | base64 --decode)
